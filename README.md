@@ -2,7 +2,7 @@
 
 [![Hexlet Check](https://github.com/valeriapikul/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/valeriapikul/frontend-project-11/actions)
 
-[![Node CI](https://github.com/USERNAME/frontend-project-11/actions/workflows/ci.yml/badge.svg)](https://github.com/USERNAME/frontend-project-11/actions/workflows/ci.yml)
+[![Node CI](https://github.com/valeriapikul/frontend-project-11/actions/workflows/ci.yml/badge.svg)](https://github.com/valeriapikul/frontend-project-11/actions/workflows/ci.yml)
 
 ## Demo
 
