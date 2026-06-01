@@ -1,12 +1,21 @@
-import { object, string } from 'yup';
+import { object, string, setLocale } from 'yup';
+
+setLocale({
+    mixed: {
+        required: 'emptyValue',
+    },
+    string: {
+        url: 'invalidURL', 
+    },
+});
 
 const schema = object({
     url: string()
-        .required('Не должно быть пустым')
-        .url('Ссылка должна быть валидным URL')
+        .required()
+        .url()
         .test(
             'not-duplicate',
-            'RSS уже существует',
+            'duplicate',
             (value, context) => {
                 const { feeds } = context.options.context;
                 return !feeds.includes(value);
