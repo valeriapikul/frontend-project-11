@@ -5,7 +5,7 @@ setLocale({
         required: 'emptyValue',
     },
     string: {
-        url: 'invalidURL', 
+        url: 'invalidURL',
     },
 });
 
@@ -18,7 +18,7 @@ const schema = object({
             'duplicate',
             (value, context) => {
                 const { feeds } = context.options.context;
-                return !feeds.includes(value);
+                return !feeds.some((feed) => feed.url === value);
             },
         ),
 });

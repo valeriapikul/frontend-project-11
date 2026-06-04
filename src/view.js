@@ -1,9 +1,51 @@
 import { subscribe } from 'valtio/vanilla'
 import i18next from './i18n.js';
 
-const initView = (state, input, feedback) => {
+
+const renderFeeds = (feeds, container) => {
+    container.innerHTML = '';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Фиды';
+    container.appendChild(h2);
+
+    const ul = document.createElement('ul');
+    feeds.forEach((feed) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${feed.title}</strong><p>${feed.description}</p>`;
+        ul.appendChild(li);
+    });
+
+    container.appendChild(ul);
+};
+
+const renderPosts = (posts, container) => {
+    container.innerHTML = '';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Посты';
+    container.appendChild(h2);
+
+    const ul = document.createElement('ul');
+    posts.forEach((post) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = post.link;
+        a.textContent = post.title;
+        li.appendChild(a);
+        ul.appendChild(li);
+    });
+
+    container.appendChild(ul);
+};
+
+const initView = (state, input, feedback, feedsContainer, postsContainer) => {
 
     subscribe(state, () => {
+
+        renderFeeds(state.feeds, feedsContainer);
+        renderPosts(state.posts, postsContainer);
+
         input.className = 'form-control';
         feedback.className = '';
         feedback.textContent = '';

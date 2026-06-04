@@ -2,11 +2,13 @@ import { proxy } from 'valtio/vanilla'
 
 const state = proxy({
     form: {
-        value: '',
         error: '',
-        status: 'idle'  // validating, failed, success 
+        status: 'idle'  // validating, failed, success, sending
     },
-    feeds: []
+    feeds: [
+    ],
+    posts: [
+    ]
 });
 
 export default state;

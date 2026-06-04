@@ -2,31 +2,58 @@ import './style.css';
 import state from './state.js';
 import schema from './validation.js';
 import initView from './view.js';
+import parseRss from './parser.js';
+import fetchRss from './fetcher.js';
 
 const form = document.querySelector('form');
 const input = form.querySelector('#rss-url');
 const feedback = form.querySelector('#feedback-url');
+const feedsContainer = document.querySelector('#feeds');
+const postsContainer = document.querySelector('#posts');
 
-initView(state, input, feedback);
+initView(state, input, feedback, feedsContainer, postsContainer);
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const obj = {
-        url: input.value.trim(),
-    }
+    const url = input.value.trim(); 
+
+    const obj = { url };
 
     schema.validate(obj, { context: { feeds: state.feeds } })
-        .then((data) => {
-            state.form.error = '';
+        .then(() => {
+            state.form.status = 'sending';
+            return fetchRss(url);
+        })
+        .then((xml) => {
+            return parseRss(xml);
+        })
+        .then((parsed) => {
+
+            const feedId = Date.now();
+
+            state.feeds.push({
+                id: feedId,
+                url,
+                ...parsed.feed
+            });
+
+            const posts = parsed.posts.map((post, index) => ({
+                id: feedId + index,
+                feedId,
+                ...post,
+            }));
+
+            state.posts.push(...posts);
+
             state.form.status = 'success';
-            state.feeds.push(data.url);
             input.value = '';
             input.focus();
+
         })
         .catch((e) => {
-            state.form.error = e.message;
+            const errorCode = e.isAxiosError ? 'networkError' : e.message;
+            state.form.error = errorCode;
             state.form.status = 'failed';
-        }
-        );
+        })
 });
