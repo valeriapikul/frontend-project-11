@@ -4,6 +4,7 @@ import schema from './validation.js';
 import initView from './view.js';
 import parseRss from './parser.js';
 import fetchRss from './fetcher.js';
+import checkUpdates from './updater.js';
 
 const form = document.querySelector('form');
 const input = form.querySelector('#rss-url');
@@ -16,7 +17,7 @@ initView(state, input, feedback, feedsContainer, postsContainer);
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const url = input.value.trim(); 
+    const url = input.value.trim();
 
     const obj = { url };
 
@@ -47,6 +48,11 @@ form.addEventListener('submit', (event) => {
             state.posts.push(...posts);
 
             state.form.status = 'success';
+
+            if (state.feeds.length === 1) {  // запускаем цикл только один раз
+                checkUpdates(state);
+            }
+
             input.value = '';
             input.focus();
 
