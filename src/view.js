@@ -5,8 +5,10 @@ import i18n from './i18n.js';
 const renderFeeds = (feeds, container) => {
     container.innerHTML = '';
 
+    if (feeds.length === 0) return;
+
     const h3 = document.createElement('h3');
-    h3.textContent = i18n.t('feeds');  
+    h3.textContent = i18n.t('feeds');
     container.appendChild(h3);
 
     const ul = document.createElement('ul');
@@ -27,9 +29,11 @@ const renderPosts = (posts, container, state) => {
 
     container.innerHTML = '';
 
-    const h2 = document.createElement('h2');
-    h2.textContent = i18n.t('posts'); 
-    container.appendChild(h2);
+    if (posts.length === 0) return;
+
+    const h3 = document.createElement('h3');
+    h3.textContent = i18n.t('posts');
+    container.appendChild(h3);
 
     const ul = document.createElement('ul');
     posts.forEach((post) => {
