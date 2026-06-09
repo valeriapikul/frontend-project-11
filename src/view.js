@@ -6,7 +6,7 @@ const renderFeeds = (feeds, container) => {
     container.innerHTML = '';
 
     const h2 = document.createElement('h2');
-    h2.textContent = 'Фиды';
+    h2.textContent = i18n.t('feeds');  
     container.appendChild(h2);
 
     const ul = document.createElement('ul');
@@ -28,7 +28,7 @@ const renderPosts = (posts, container, state) => {
     container.innerHTML = '';
 
     const h2 = document.createElement('h2');
-    h2.textContent = 'Посты';
+    h2.textContent = i18n.t('posts'); 
     container.appendChild(h2);
 
     const ul = document.createElement('ul');
@@ -48,7 +48,8 @@ const renderPosts = (posts, container, state) => {
         li.appendChild(a);
 
         const button = document.createElement('button');
-        button.textContent = 'Просмотр';
+        button.type = 'button';
+        button.textContent = i18n.t('preview');
         button.dataset.id = post.id;
         li.appendChild(button);
 

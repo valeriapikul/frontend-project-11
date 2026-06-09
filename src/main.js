@@ -1,5 +1,4 @@
 import './style.css';
-import state from './state.js';
 import schema from './validation.js';
 import initView from './view.js';
 import parseRss from './parser.js';
