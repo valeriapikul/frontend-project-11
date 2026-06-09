@@ -11,6 +11,7 @@ const init = () => {
         form: { status: 'idle', error: null },
         feeds: [],
         posts: [],
+        readPosts: [],
     });
 
     const form = document.querySelector('form');
@@ -38,6 +39,9 @@ const init = () => {
             })
             .then((parsed) => {
 
+                console.log('parsed:', parsed);
+                console.log('posts count:', parsed.posts.length);
+
                 const feedId = Date.now();
 
                 state.feeds.push({
@@ -62,6 +66,9 @@ const init = () => {
 
                 input.value = '';
                 input.focus();
+
+                console.log('feed:', feed);
+                console.log('posts:', posts);
 
             })
             .catch((e) => {
