@@ -14,7 +14,15 @@ const renderFeeds = (feeds, container) => {
     const ul = document.createElement('ul');
     feeds.forEach((feed) => {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${feed.title}</strong><p>${feed.description}</p>`;
+
+        const h3 = document.createElement('h3');
+        h3.textContent = feed.title;
+
+        const p = document.createElement('p');
+        p.textContent = feed.description;
+
+        li.appendChild(h3);
+        li.appendChild(p);
         ul.appendChild(li);
     });
 
@@ -44,7 +52,7 @@ const renderPosts = (posts, container, state) => {
         a.textContent = post.title;
 
         if (state.readPosts.includes(post.id)) {
-            a.classList.add('fw-normal');
+            a.classList.add('fw-normal', 'link-secondary');
         } else {
             a.classList.add('fw-bold');
         }

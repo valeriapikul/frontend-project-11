@@ -1,4 +1,3 @@
-// src/updater.js
 import fetchRss from './fetcher.js';
 import parseRss from './parser.js';
 
