@@ -1,6 +1,6 @@
 const parseRss = (xmlString) => {
 
-    const doc = new DOMParser().parseFromString(xmlString, 'application/xml'); // здесь наша строка xml превращается в DOM
+    const doc = new DOMParser().parseFromString(xmlString, 'application/xml'); 
 
     if (doc.querySelector('parsererror') !== null) {
         throw new Error("invalidRss");

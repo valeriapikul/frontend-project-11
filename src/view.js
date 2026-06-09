@@ -95,19 +95,19 @@ const initView = (state, input, feedback, feedsContainer, postsContainer) => {
         renderFeeds(state.feeds, feedsContainer);
         renderPosts(state.posts, postsContainer, state);
 
-        input.className = 'form-control';
-        feedback.className = '';
+        input.classList.remove('is-invalid');
+        feedback.classList.remove('text-danger', 'text-success');
         feedback.textContent = '';
 
         if (state.form.status === 'failed') {
 
             input.classList.add('is-invalid');
-            feedback.className = 'text-danger';
+            feedback.classList.add('text-danger');
             feedback.textContent = i18n.t(state.form.error);
 
         } else if (state.form.status === 'success') {
 
-            feedback.className = 'text-success';
+            feedback.classList.add('text-success');
             feedback.textContent = i18n.t('successMessage');
 
         } else {
