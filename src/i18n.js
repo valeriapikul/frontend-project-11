@@ -1,4 +1,4 @@
-import i18n from 'i18n';
+import i18next from 'i18next';
 import ru from './locales/ru.js';
 
 const i18n = i18n.createInstance();

@@ -1,3 +1,4 @@
+import { proxy } from 'valtio/vanilla';
 import './style.css';
 import schema from './validation.js';
 import initView from './view.js';
