@@ -19,7 +19,12 @@ const renderFeeds = (feeds, container) => {
     container.appendChild(ul);
 };
 
-const renderPosts = (posts, container) => {
+const renderPosts = (posts, container, state) => {
+
+    const modalTitle = document.querySelector('.modal-title');
+    const modalBody = document.querySelector('.modal-body p');
+    const modalLink = document.querySelector('.modal-footer a');
+
     container.innerHTML = '';
 
     const h2 = document.createElement('h2');
@@ -29,11 +34,42 @@ const renderPosts = (posts, container) => {
     const ul = document.createElement('ul');
     posts.forEach((post) => {
         const li = document.createElement('li');
+        li.classList.add('d-flex', 'justify-content-between');
         const a = document.createElement('a');
         a.href = post.link;
         a.textContent = post.title;
+
+        if (state.readPosts.includes(post.id)) {
+            a.classList.add('fw-normal');
+        } else {
+            a.classList.add('fw-bold');
+        }
+
         li.appendChild(a);
+
+        const button = document.createElement('button');
+        button.textContent = 'Просмотр';
+        button.dataset.id = post.id;
+        li.appendChild(button);
+
         ul.appendChild(li);
+    });
+
+    ul.addEventListener('click', (event) => {
+        if (event.target.tagName === 'BUTTON') {
+
+            const id = event.target.dataset.id;
+
+            const post = posts.find((p) => p.id === parseInt(id));
+            state.readPosts.push(post.id);
+
+            modalTitle.textContent = post.title;
+            modalBody.textContent = post.description;
+            modalLink.href = post.link;
+
+            const modal = new bootstrap.Modal(document.querySelector('#modal'));
+            modal.show();
+        }
     });
 
     container.appendChild(ul);
@@ -44,7 +80,7 @@ const initView = (state, input, feedback, feedsContainer, postsContainer) => {
     subscribe(state, () => {
 
         renderFeeds(state.feeds, feedsContainer);
-        renderPosts(state.posts, postsContainer);
+        renderPosts(state.posts, postsContainer, state);
 
         input.className = 'form-control';
         feedback.className = '';

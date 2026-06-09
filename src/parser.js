@@ -18,6 +18,7 @@ const parseRss = (xmlString) => {
 
     const posts = Array.from(items).map(item => ({
         title: item.querySelector('title').textContent,
+        description: item.querySelector('description').textContent,
         link: item.querySelector('link').textContent,
     }));
 
