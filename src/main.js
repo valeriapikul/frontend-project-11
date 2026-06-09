@@ -6,60 +6,71 @@ import parseRss from './parser.js';
 import fetchRss from './fetcher.js';
 import checkUpdates from './updater.js';
 
-const form = document.querySelector('form');
-const input = form.querySelector('#rss-url');
-const feedback = form.querySelector('#feedback-url');
-const feedsContainer = document.querySelector('#feeds');
-const postsContainer = document.querySelector('#posts');
+const init = () => {
+    const state = proxy({
+        form: { status: 'idle', error: null },
+        feeds: [],
+        posts: [],
+    });
 
-initView(state, input, feedback, feedsContainer, postsContainer);
+    const form = document.querySelector('form');
+    const input = form.querySelector('#rss-url');
+    const feedback = form.querySelector('#feedback-url');
+    const feedsContainer = document.querySelector('#feeds');
+    const postsContainer = document.querySelector('#posts');
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
+    initView(state, input, feedback, feedsContainer, postsContainer);
 
-    const url = input.value.trim();
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    const obj = { url };
+        const url = input.value.trim();
 
-    schema.validate(obj, { context: { feeds: state.feeds } })
-        .then(() => {
-            state.form.status = 'sending';
-            return fetchRss(url);
-        })
-        .then((xml) => {
-            return parseRss(xml);
-        })
-        .then((parsed) => {
+        const obj = { url };
 
-            const feedId = Date.now();
+        schema.validate(obj, { context: { feeds: state.feeds } })
+            .then(() => {
+                state.form.status = 'sending';
+                return fetchRss(url);
+            })
+            .then((xml) => {
+                return parseRss(xml);
+            })
+            .then((parsed) => {
 
-            state.feeds.push({
-                id: feedId,
-                url,
-                ...parsed.feed
-            });
+                const feedId = Date.now();
 
-            const posts = parsed.posts.map((post, index) => ({
-                id: feedId + index,
-                feedId,
-                ...post,
-            }));
+                state.feeds.push({
+                    id: feedId,
+                    url,
+                    ...parsed.feed
+                });
 
-            state.posts.push(...posts);
+                const posts = parsed.posts.map((post, index) => ({
+                    id: feedId + index,
+                    feedId,
+                    ...post,
+                }));
 
-            state.form.status = 'success';
+                state.posts.push(...posts);
 
-            if (state.feeds.length === 1) {  // запускаем цикл только один раз
-                checkUpdates(state);
-            }
+                state.form.status = 'success';
 
-            input.value = '';
-            input.focus();
+                if (state.feeds.length === 1) {  // запускаем цикл только один раз
+                    checkUpdates(state);
+                }
 
-        })
-        .catch((e) => {
-            const errorCode = e.isAxiosError ? 'networkError' : e.message;
-            state.form.error = errorCode;
-            state.form.status = 'failed';
-        })
-});
+                input.value = '';
+                input.focus();
+
+            })
+            .catch((e) => {
+                const errorCode = e.isAxiosError ? 'networkError' : e.message;
+                state.form.error = errorCode;
+                state.form.status = 'failed';
+            })
+    });
+
+};
+
+init();

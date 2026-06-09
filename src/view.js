@@ -1,5 +1,5 @@
 import { subscribe } from 'valtio/vanilla'
-import i18next from './i18n.js';
+import i18n from './i18n.js';
 
 
 const renderFeeds = (feeds, container) => {
@@ -90,12 +90,12 @@ const initView = (state, input, feedback, feedsContainer, postsContainer) => {
 
             input.classList.add('is-invalid');
             feedback.className = 'text-danger';
-            feedback.textContent = i18next.t(state.form.error);
+            feedback.textContent = i18n.t(state.form.error);
 
         } else if (state.form.status === 'success') {
 
             feedback.className = 'text-success';
-            feedback.textContent = i18next.t('successMessage');
+            feedback.textContent = i18n.t('successMessage');
 
         } else {
             return;

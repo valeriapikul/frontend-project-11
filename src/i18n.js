@@ -1,7 +1,9 @@
-import i18next from 'i18next';
+import i18n from 'i18n';
 import ru from './locales/ru.js';
 
-i18next.init({
+const i18n = i18n.createInstance();
+
+i18n.init({
   lng: 'ru',
   debug: false,
   resources: {
@@ -10,5 +12,4 @@ i18next.init({
   initImmediate: false,
 });
 
-export default i18next;
-// после этого i18next.t('ключ') вернёт нужный текст
+export default i18n;
