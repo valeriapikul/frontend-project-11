@@ -5,9 +5,9 @@ import i18n from './i18n.js';
 const renderFeeds = (feeds, container) => {
     container.innerHTML = '';
 
-    const h2 = document.createElement('h2');
-    h2.textContent = i18n.t('feeds');  
-    container.appendChild(h2);
+    const h3 = document.createElement('h3');
+    h3.textContent = i18n.t('feeds');  
+    container.appendChild(h3);
 
     const ul = document.createElement('ul');
     feeds.forEach((feed) => {

@@ -20,10 +20,10 @@
             <form class="row g-3">
               <div class="col-12 col-md-8">
                 <label for="rss-url" class="form-label">Ссылка RSS</label>
-                <input id="rss-url" name="url" type="text" class="form-control"
+                <input id="rss-url" name="url" aria-label="url" type="text" class="form-control"
                   placeholder="https://example.com/feed.xml" autocomplete="off" required
                   aria-describedby="feedback-url" />
-                <div id="feedback-url"></div>
+                <div class="feedback" id="feedback-url"></div>
               </div>
               <div class="col-12 col-md-4 d-grid align-self-end">
                 <button type="submit" class="btn btn-primary">
@@ -35,8 +35,8 @@
         </div>
       </div>
       <div class="d-flex justify-content-between col-12 col-lg-10">
-        <div class="col-4" id="feeds"></div>
-        <div class="col-8" id="posts"></div>
+        <div class="col-4 feeds" id="feeds"></div>
+        <div class="col-8 posts" id="posts"></div>
       </div>
       <div class="modal" tabindex="-1" id="modal">
         <div class="modal-dialog">
